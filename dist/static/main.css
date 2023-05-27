@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%
+}
+
+#loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+#loginForm {
+    margin: 40px auto;
+    width: 300px;
+}
+#loginText {
+    margin: 10px auto;
+    width: 300px;
+}
+#cartContainer {
+    border: 2px hotpink solid;
+    margin: 40px auto;
+    width: 60%;
+    min-width: 700px;
+    display: flex;
+    flex-direction: row;
+}
+
+#shopArea {
+    border: 2px slateblue solid;
+    width: 50%;
+    padding: 10px;
+}
+#cartArea {
+    border: 2px cyan solid;
+    width: 50%;
+    padding: 10px;
+}
+

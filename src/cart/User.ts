@@ -34,6 +34,61 @@ export default class User {
         this._id = value
     }
 
+    // Static Methods
+    public static loginInUser = (inputName: string|null, inputAge: string|null): User|null => {
+        if (inputName && inputAge) {
+            const loginUser = new User(inputName, parseInt(inputAge))
+            return loginUser
+        }
+        return null
+    }
+
+    public cartHTMLElement = (): HTMLDivElement => {
+        const div: HTMLDivElement = document.createElement('div')
+        for (let cartItem of this.cart) {
+            let itemLine: HTMLDivElement = document.createElement('div')
+            let itemNameH3: HTMLElement = document.createElement('h3') 
+            let itemQtyP: HTMLElement = document.createElement('p') 
+            let itemPriceP: HTMLElement = document.createElement('p') 
+            let btnRmAll: HTMLElement = document.createElement('button')
+            let btnRmOne: HTMLElement = document.createElement('button')
+            itemLine.className = "itemLine"
+            itemNameH3.innerText = cartItem.name
+            itemQtyP.innerText = "Qty: 1"
+            itemPriceP.innerText = `$${cartItem.price.toString()}`
+            btnRmAll.id = `btnRmAll-${cartItem.id}`
+            btnRmAll.innerText = "Remove All"
+            this.addRemoveEventListeners(cartItem, "btnRmAll", true)
+            btnRmOne.id = `btnRmOne-${cartItem.id}`
+            btnRmOne.innerText = "Remove One"
+            this.addRemoveEventListeners(cartItem, "btnRmOne", true)
+            itemLine.append(itemNameH3, itemQtyP, itemPriceP, btnRmAll, btnRmOne)
+            div.appendChild(itemLine)
+        }
+        return div
+    }
+
+    public addRemoveEventListeners = (item: Item, 
+                                        prefixElem: string, 
+                                        add: boolean): void => {
+        // prefixElem: string is the button id prefix before the dash "-"
+        const elem: HTMLElement = document.getElementById(`${prefixElem}-${item.id}`)!
+        // @ts-ignore
+        const listener = (e): void => {
+            e.preventDefault()
+            if (prefixElem === "btnRmAll") {
+                this.removeFromCart(item)
+            } else if (prefixElem === "btnRmOne") {
+                this.removeQuantityFromCart(item, 1)
+            } else if (prefixElem === "btnAddToCart") {
+                this.addToCart(item)
+            }
+        }
+        add ? 
+        elem.addEventListener('click', listener) : 
+        elem.removeEventListener('click', listener)
+    }
+
     // Class Methods 
     public addToCart = (item: Item): void => {
         this.cart.push(item)
@@ -46,12 +101,16 @@ export default class User {
             let idx = this.cart.indexOf(item)
             this.cart.splice(idx, 1)
         }
+        this.addRemoveEventListeners(item, "btnRmAll", false)
         console.log(`Removed all (${countItems}) ${item.name} from Cart.`)
     }
     public removeQuantityFromCart = (item: Item, qtyRemove: number): void => {
         for (let i = 0; i < qtyRemove; i++) {
             let idx = this.cart.indexOf(item)
             this.cart.splice(idx, 1)
+        }
+        if (!this.cart.includes(item)) {
+            this.addRemoveEventListeners(item, "btnRmOne", false)
         }
         console.log(`Removed ${qtyRemove} ${item.name} from Cart.`)
     }
