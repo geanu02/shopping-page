@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from "uuid"
-import { User } from "./index"
 
 export default class Item {
     constructor(
@@ -49,5 +48,4 @@ export default class Item {
         div.append(itemNameH3, itemDesc, itemPriceP, addToCart)
         return div
     }
-
 }

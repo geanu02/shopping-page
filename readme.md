@@ -31,6 +31,7 @@
   ​
 - Modify the User Class 
     - static loginInUser() : Create a Static function that will retrieve the infomation from the HTML input field for name and age. The function should return a new User created with the name and age, if a new and age was provided otherwise it can return null or undefined. Note: This method is static because it doesn't need to work with a User instance. And to call this static method somewhere else in code it would look like User.createUser()
+
     ​ - cartHTMLElement() : This will return an HTML Div Element. This function will loop over your cart and create some HTML Code to layout your cart items in a formatted way to have the Name, Quantity and price of each item shown. You will also create a button to Remove All or Remove Just One of these items from the cart. The event listenering for these buttons will be created ina different function. Remember: You'll need to devise a way that each add and remove element is tied to a particular item (an easy way to do this is give every button an id based off the items UUIID and precede/follow the UUID with a tag that says whether the button is a remove one or remove all button)
   ​
     -addRemoveEventListeners() - This function adds event listeners to your cart's Remove One/Remove All Buttons. They will use the previously build removeQuantityFromCart and removeFromCart functions built in the prev. nights homework.
@@ -41,9 +42,9 @@
 - Modify the Shop Class 
     - showItems() - This method will loop over all teh shop items and add each items itemElement to the shop div ofthe HTML 
 
-    - updateCart() - This method will create the cart contents and siplay them to the cart div in the HTML. If the Cart is empty it should say the cart is empty, if the cart contains Items it will list all the cart items using the cartHTMLElement method and the addRemoveEventListeners function 
+    - updateCart() - This method will create the cart contents and diplay them to the cart div in the HTML. If the Cart is empty it should say the cart is empty, if the cart contains Items it will list all the cart items using the cartHTMLElement method and the addRemoveEventListeners function 
     
-    - static myUser property. This property will be wither undefined (before the user "logins" or an actual User Object) This will represent the person shoping at our store 
+    - static myUser property. This property will be either undefined (before the user "logins" or an actual User Object) This will represent the person shoping at our store 
     
     - static loginUser(event) - This will be a static function. This will be attached to our "login/create user" button to be ran when the user logs in. This method should create a user and save it to the myUser static property. If that user was created succesfully it should then create the shop and cart elements on the page. 
     
