@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid"
 import { Item, User } from "./index"
 
 export default class Shop {
-    public static myUser: User|undefined = undefined
+    public static myUser: User
     
     constructor(
         private _shopName: string,
@@ -31,13 +31,16 @@ export default class Shop {
     }
     
     // Static Methods
-    public static loginUser(event): void => {
-        this.myUser = new User()
+   /*  @ts-ignore */
+    public static loginUser = (e) => {
+        e.preventDefault()
+        const userInput = document.getElementById('userInput') as HTMLInputElement
+        const ageInput = document.getElementById('ageInput') as HTMLInputElement
+        this.myUser = new User(userInput.value, parseInt(ageInput.value))
     }
 
-
     // Methods
-    public showItems(): HTMLDivElement {
+    public showItems = (): HTMLDivElement => {
         const div: HTMLDivElement = document.createElement('div')!
         for (let productItem of this.products) {
             div.append(productItem.itemElement(productItem))
@@ -45,7 +48,7 @@ export default class Shop {
         return div
     }
 
-    public updateCart(): HTMLDivElement {
+    public updateCart = (): HTMLDivElement => {
         const div: HTMLDivElement = document.createElement('div')!
 
         return div
