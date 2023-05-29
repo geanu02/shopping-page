@@ -10,6 +10,7 @@ export default class Shop {
         private _products: Item[] = []
     ){
         this.addDefaultItems()
+        
     }
     public get products(): Item[] {
         return this._products
@@ -48,17 +49,44 @@ export default class Shop {
         return div
     }
 
-    public updateCart = (): HTMLDivElement => {
+    public updateCart = (cart: Item[]): HTMLDivElement => {
         const div: HTMLDivElement = document.createElement('div')!
-
+        if (cart.length) {
+            for (let cartItem of cart) {
+                let itemLine: HTMLDivElement = document.createElement('div')
+                let itemNameH3: HTMLElement = document.createElement('h3') 
+                let itemQtyP: HTMLElement = document.createElement('p') 
+                let itemPriceP: HTMLElement = document.createElement('p') 
+                // let btnRmAll: HTMLElement = document.createElement('button')
+                // let btnRmOne: HTMLElement = document.createElement('button')
+                itemLine.className = "itemLine"
+                itemNameH3.innerText = cartItem.name
+                itemQtyP.innerText = "Qty: 1"
+                itemPriceP.innerText = `$${cartItem.price.toString()}`
+                // btnRmAll.id = `btnRmAll-${cartItem.id}`
+                // btnRmAll.innerText = "Remove All"
+                // this.addRemoveEventListeners(cartItem, "btnRmAll", true)
+                // btnRmOne.id = `btnRmOne-${cartItem.id}`
+                // btnRmOne.innerText = "Remove One"
+                // this.addRemoveEventListeners(cartItem, "btnRmOne", true)
+                //itemLine.append(itemNameH3, itemQtyP, itemPriceP, btnRmAll, btnRmOne)
+                itemLine.append(itemNameH3, itemQtyP, itemPriceP)
+                div.appendChild(itemLine)
+            }
+        } else {
+            const noItems: HTMLElement = document.createElement('p') 
+            noItems.innerText = "Cart is empty."
+            div.appendChild(noItems)
+        }
         return div
     }
 
     private addDefaultItems = (): void => {
-        this._products.push(new Item("Apple", 1.25, "Granny Smith Apple"))
-        this._products.push(new Item("Orange", 1.05, "Southwest Tangerine"))
-        this._products.push(new Item("Banana", 0.75, "Peruvian Banana"))
+        this._products.push(new Item("Caviar, 4oz", 480, "Persian Sevruga Caviar"))
+        this._products.push(new Item("Truffle, 1lb", 300, "Italian Summer Black Truffle"))
+        this._products.push(new Item("Uni, 200g", 150, "San Diego Murasaki Uni"))
+        this._products.push(new Item("Wagyu, 20oz", 200, "Kagoshima A5 Wagyu Ribeye"))
+        this._products.push(new Item("Jamon, 10oz", 30, "Iberico de Bellota Jamon"))
+        this._products.push(new Item("Foie Gras", 125, "Fresh Foie Gras Grade A"))
     }
-
-
 }

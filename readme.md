@@ -53,10 +53,9 @@
 
 ## Driver Code
 
-    - We will need a little bit of code to run on page load. We can do this simply by wriiting this code outside of our classes and functions.  Thi code will add the loginUser method to the login/create user Button
+    - We will need a little bit of code to run on page load. We can do this simply by wriiting this code outside of our classes and functions.  This code will add the loginUser method to the login/create user Button
 
 ​
-
 ### Tips:
 
 - With Typescript if you have an input field with the id of email you can retrieve information for it like so: `<HTMLInputElement>document.getElementById("email")).value`
