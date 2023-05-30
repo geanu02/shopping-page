@@ -46,17 +46,17 @@ export default class Item {
         itemPriceP.innerText = item.price.toString()
         addToCart.id = `btnAddToCart-${item.id}`
         addToCart.innerText = "Add to Cart"
+        div.append(itemNameH3, itemDesc, itemPriceP, addToCart)
         // @ts-ignore
         addToCart.addEventListener('click', (e): void => {
             e.preventDefault()
+            console.log(Shop.myUser)
             if (Shop.myUser !== undefined) {
                 Shop.myUser.addToCart(item)
-            } else { console.log("Can't addEventListener to AddToCart button")}
+            } else { 
+                console.log("Can't addEventListener to AddToCart button")
+            }
         })
-        // if (Shop.myUser) {
-        //     Shop.myUser.addRemoveEventListeners(item, "btnAddToCart", true)
-        // }
-        div.append(itemNameH3, itemDesc, itemPriceP, addToCart)
         return div
     }
 

@@ -29,15 +29,3 @@ img {
     display: flex;
     flex-direction: row;
 }
-
-#shopArea {
-    border: 2px slateblue solid;
-    width: 50%;
-    padding: 10px;
-}
-#cartArea {
-    border: 2px cyan solid;
-    width: 50%;
-    padding: 10px;
-}
-

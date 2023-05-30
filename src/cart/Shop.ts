@@ -19,7 +19,7 @@ export default class Shop {
             flexDirection: "row",
         }
         Object.assign(this.parent.style, shopContainerStyle)
-        this.parent.append(this.showItems(), this.updateCart() || '')
+        this.parent.append(this.showItems(), this.updateCart())
     }
     public get parent(): HTMLElement {
         return this._parent
@@ -47,7 +47,7 @@ export default class Shop {
     }
     
     // Static Methods
-   /*  @ts-ignore */
+    /*  @ts-ignore */
     public static loginUser = (e): void => {
         e.preventDefault()
         const userInput = document.getElementById('userInput') as HTMLInputElement
@@ -55,31 +55,45 @@ export default class Shop {
         const cartContainer: HTMLElement = document.getElementById('cartContainer')!
         Shop.myUser = User.loginInUser(userInput.value, ageInput.value)
         const cart = new Shop("Regalis", cartContainer)
-        console.log(cart.products)
+        Shop.refreshCart(cart, cartContainer)
+    }
+
+    public static refreshCart = (cart: Shop, cartContainer: HTMLElement): void => {
+        const refreshBtn = document.createElement('button')
+        refreshBtn.id = "refreshBtn"
+        refreshBtn.innerText = "Refresh"
+        /*  @ts-ignore */
+        refreshBtn.addEventListener("click", (e): void => {
+            cart.updateCart()
+        })
+        cartContainer.appendChild(refreshBtn)
     }
 
     // Methods
     public showItems = (): HTMLDivElement => {
-        const div: HTMLDivElement = document.createElement('div')!
+        const div: HTMLDivElement = document.createElement('div')
         for (let productItem of this.products) {
             div.append(productItem.itemElement(productItem))
         }
         return div
     }
 
-    public updateCart = (): HTMLDivElement|undefined => {
+    /* @ts-ignore */
+    public updateCart = (): HTMLDivElement => {
         if (Shop.myUser) {
-            const div: HTMLDivElement = document.createElement('div')!
-            if (Shop.myUser.cart.length) {
+            const div: HTMLDivElement = document.createElement('div')
+            if (Shop.myUser.cart.length > 0) {
+                
                 div.appendChild(Shop.myUser.cartHTMLElement())
+                console.log("updateCart(Shop.myUser.cart has items)")
+                // Shop.myUser.addRemoveEventListeners(true)
             } else {
+                console.log("updateCart(Shop.myUser.cart has no items)")
                 const noItems: HTMLElement = document.createElement('p') 
                 noItems.innerText = "Cart is empty."
                 div.appendChild(noItems)
             }
             return div
-        } else {
-            return undefined
         }
     }
 
