@@ -53,7 +53,7 @@
 
 ## Driver Code
 
-    - We will need a little bit of code to run on page load. We can do this simply by wriiting this code outside of our classes and functions.  This code will add the loginUser method to the login/create user Button
+    - We will need a little bit of code to run on page load. We can do this simply by writing this code outside of our classes and functions.  This code will add the loginUser method to the login/create user Button
 
 ​
 ### Tips:

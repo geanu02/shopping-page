@@ -34,13 +34,13 @@ export default class User {
         this._id = value
     }
 
-    // Static Methods
-    public static loginInUser = (inputName: string|null, inputAge: string|null): User|null => {
+    // Static Method
+    public static loginInUser = (inputName: string|null, inputAge: string|null): User|undefined => {
         if (inputName && inputAge) {
             const loginUser = new User(inputName, parseInt(inputAge))
             return loginUser
         }
-        return null
+        return undefined
     }
 
     public cartHTMLElement = (): HTMLDivElement => {
@@ -69,10 +69,10 @@ export default class User {
     }
 
     public addRemoveEventListeners = (item: Item, 
-                                        prefixElem: string, 
-                                        add: boolean): void => {
+                                    prefixElem: string, 
+                                    add: boolean): void => {
         // prefixElem: string is the button id prefix before the dash "-"
-        const elem: HTMLElement = document.getElementById(`${prefixElem}-${item.id}`)!
+        const elem: HTMLElement = document.querySelector(`#${prefixElem}-${item.id}`)!
         // @ts-ignore
         const listener = (e): void => {
             e.preventDefault()

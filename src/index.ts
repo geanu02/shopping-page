@@ -1,24 +1,9 @@
-import { User, Shop } from "./cart/index"
+import { Shop } from "./cart/index"
 
-console.log(Shop)
-
-
-const userInput = document.getElementById('userInput') as HTMLInputElement
-const ageInput = document.getElementById('ageInput') as HTMLInputElement
 const loginForm: HTMLElement = document.getElementById('loginForm')!
-const loginInfo: HTMLElement = document.getElementById('loginInfo')!
-
-loginForm.addEventListener("submit", e => {
-    e.preventDefault()
-    if (userInput.value != "" && ageInput.value != "") {
-        const currentUser = User.loginInUser(userInput.value, ageInput.value)
-        console.log(currentUser)
-        loginInfo.innerText = `Successfully logged in: ${currentUser?.name}`
-    }
-    console.log("Invalid Data")
-})
-
-
+// const loginInfo: HTMLElement = document.getElementById('loginInfo')!
+// const cartContainer: HTMLElement = document.getElementById('cartContainer')!
+loginForm.addEventListener("submit", Shop.loginUser)
 
 //const shop1 = new Shop("Shop1")
 // const user1 = new User("Gian", 27)

@@ -2,15 +2,30 @@ import { v4 as uuidv4 } from "uuid"
 import { Item, User } from "./index"
 
 export default class Shop {
-    public static myUser: User
-    
+
+    public static myUser: User|undefined
+
     constructor(
         private _shopName: string,
+        private _parent: HTMLElement,
         private _id: string = uuidv4(),
         private _products: Item[] = []
     ){
         this.addDefaultItems()
-        
+        this.parent.innerHTML = ""
+        this.parent.id = "shopContainer"
+        const shopContainerStyle: Partial<CSSStyleDeclaration> = {
+            display: "flex",
+            flexDirection: "row",
+        }
+        Object.assign(this.parent.style, shopContainerStyle)
+        this.parent.append(this.showItems(), this.updateCart() || '')
+    }
+    public get parent(): HTMLElement {
+        return this._parent
+    }
+    public set parent(value: HTMLElement) {
+        this._parent = value
     }
     public get products(): Item[] {
         return this._products
@@ -33,11 +48,14 @@ export default class Shop {
     
     // Static Methods
    /*  @ts-ignore */
-    public static loginUser = (e) => {
+    public static loginUser = (e): void => {
         e.preventDefault()
         const userInput = document.getElementById('userInput') as HTMLInputElement
         const ageInput = document.getElementById('ageInput') as HTMLInputElement
-        this.myUser = new User(userInput.value, parseInt(ageInput.value))
+        const cartContainer: HTMLElement = document.getElementById('cartContainer')!
+        Shop.myUser = User.loginInUser(userInput.value, ageInput.value)
+        const cart = new Shop("Regalis", cartContainer)
+        console.log(cart.products)
     }
 
     // Methods
@@ -49,36 +67,20 @@ export default class Shop {
         return div
     }
 
-    public updateCart = (cart: Item[]): HTMLDivElement => {
-        const div: HTMLDivElement = document.createElement('div')!
-        if (cart.length) {
-            for (let cartItem of cart) {
-                let itemLine: HTMLDivElement = document.createElement('div')
-                let itemNameH3: HTMLElement = document.createElement('h3') 
-                let itemQtyP: HTMLElement = document.createElement('p') 
-                let itemPriceP: HTMLElement = document.createElement('p') 
-                // let btnRmAll: HTMLElement = document.createElement('button')
-                // let btnRmOne: HTMLElement = document.createElement('button')
-                itemLine.className = "itemLine"
-                itemNameH3.innerText = cartItem.name
-                itemQtyP.innerText = "Qty: 1"
-                itemPriceP.innerText = `$${cartItem.price.toString()}`
-                // btnRmAll.id = `btnRmAll-${cartItem.id}`
-                // btnRmAll.innerText = "Remove All"
-                // this.addRemoveEventListeners(cartItem, "btnRmAll", true)
-                // btnRmOne.id = `btnRmOne-${cartItem.id}`
-                // btnRmOne.innerText = "Remove One"
-                // this.addRemoveEventListeners(cartItem, "btnRmOne", true)
-                //itemLine.append(itemNameH3, itemQtyP, itemPriceP, btnRmAll, btnRmOne)
-                itemLine.append(itemNameH3, itemQtyP, itemPriceP)
-                div.appendChild(itemLine)
+    public updateCart = (): HTMLDivElement|undefined => {
+        if (Shop.myUser) {
+            const div: HTMLDivElement = document.createElement('div')!
+            if (Shop.myUser.cart.length) {
+                div.appendChild(Shop.myUser.cartHTMLElement())
+            } else {
+                const noItems: HTMLElement = document.createElement('p') 
+                noItems.innerText = "Cart is empty."
+                div.appendChild(noItems)
             }
+            return div
         } else {
-            const noItems: HTMLElement = document.createElement('p') 
-            noItems.innerText = "Cart is empty."
-            div.appendChild(noItems)
+            return undefined
         }
-        return div
     }
 
     private addDefaultItems = (): void => {

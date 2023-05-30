@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
+import { Shop } from "./index"
 
 export default class Item {
     constructor(
@@ -45,7 +46,20 @@ export default class Item {
         itemPriceP.innerText = item.price.toString()
         addToCart.id = `btnAddToCart-${item.id}`
         addToCart.innerText = "Add to Cart"
+        // @ts-ignore
+        addToCart.addEventListener('click', (e): void => {
+            e.preventDefault()
+            if (Shop.myUser !== undefined) {
+                Shop.myUser.addToCart(item)
+            } else { console.log("Can't addEventListener to AddToCart button")}
+        })
+        // if (Shop.myUser) {
+        //     Shop.myUser.addRemoveEventListeners(item, "btnAddToCart", true)
+        // }
         div.append(itemNameH3, itemDesc, itemPriceP, addToCart)
         return div
     }
+
+
+
 }
