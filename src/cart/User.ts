@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid"
-import { Item } from "./index"
+import { Shop, Item } from "./index"
 import { idxSign, formatterUSD } from "./types"
 
 export default class User {
@@ -90,31 +90,10 @@ export default class User {
         // else is to remove listeners from removeCart and removeQtyCart
     }
 
-    // public addRemoveEventListeners2 = (item: Item, 
-    //                                 prefixElem: string, 
-    //                                 add: boolean): void => {
-    //     // prefixElem: string is the button id prefix before the dash "-"
-    //     const elem: HTMLElement = document.querySelector(`#${prefixElem}-${item.id}`)!
-    //     // @ts-ignore
-    //     const listener = (e): void => {
-    //         e.preventDefault()
-    //         if (prefixElem === "btnRmAll") {
-    //             this.removeFromCart(item)
-    //         } else if (prefixElem === "btnRmOne") {
-    //             this.removeQuantityFromCart(item, 1)
-    //         }
-    //     }
-    //     console.log(elem)
-    //     if (add === true) {
-    //         elem.addEventListener('click', listener) 
-    //     } else {
-    //         elem.removeEventListener('click', listener)
-    //     }
-    // }
-
     // Class Methods 
     public addToCart = (item: Item): void => {
         this.cart.push(item)
+        Shop.refreshCart()
         console.log(`Added 1 ${item.name} to cart.`)
     }
     public removeFromCart = (item: Item): void => {

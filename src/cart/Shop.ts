@@ -4,6 +4,7 @@ import { Item, User } from "./index"
 export default class Shop {
 
     public static myUser: User|undefined
+    public static currentCart: Shop
 
     constructor(
         private _shopName: string,
@@ -54,21 +55,12 @@ export default class Shop {
         const ageInput = document.getElementById('ageInput') as HTMLInputElement
         const cartContainer: HTMLElement = document.getElementById('cartContainer')!
         Shop.myUser = User.loginInUser(userInput.value, ageInput.value)
-        const cart = new Shop("Regalis", cartContainer)
-        Shop.refreshCart(cart, cartContainer)
+        Shop.currentCart = new Shop("Regalis", cartContainer)
     }
 
-    public static refreshCart = (cart: Shop, cartContainer: HTMLElement): void => {
-        const refreshBtn = document.createElement('button')
-        const container = document.getElementById('cartDivElement')
-        refreshBtn.id = "refreshBtn"
-        refreshBtn.innerText = "Refresh"
-        /*  @ts-ignore */
-        refreshBtn.addEventListener("click", (e): void => {
-            // cart.updateCart()
-            container?.replaceChildren(cart.updateCart())
-        })
-        cartContainer.appendChild(refreshBtn)
+    public static refreshCart = (): void => {
+        document.getElementById('cartDivElement')?.replaceChildren(Shop.currentCart.updateCart())
+
     }
 
     // Methods
@@ -86,7 +78,6 @@ export default class Shop {
             const div: HTMLDivElement = document.createElement('div')
             div.id = "cartDivElement"
             if (Shop.myUser.cart.length > 0) {
-                
                 div.appendChild(Shop.myUser.cartHTMLElement())
                 console.log("updateCart(Shop.myUser.cart has items)")
                 // Shop.myUser.addRemoveEventListeners(true)
