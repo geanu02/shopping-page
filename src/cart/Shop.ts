@@ -60,11 +60,13 @@ export default class Shop {
 
     public static refreshCart = (cart: Shop, cartContainer: HTMLElement): void => {
         const refreshBtn = document.createElement('button')
+        const container = document.getElementById('cartDivElement')
         refreshBtn.id = "refreshBtn"
         refreshBtn.innerText = "Refresh"
         /*  @ts-ignore */
         refreshBtn.addEventListener("click", (e): void => {
-            cart.updateCart()
+            // cart.updateCart()
+            container?.replaceChildren(cart.updateCart())
         })
         cartContainer.appendChild(refreshBtn)
     }
@@ -82,6 +84,7 @@ export default class Shop {
     public updateCart = (): HTMLDivElement => {
         if (Shop.myUser) {
             const div: HTMLDivElement = document.createElement('div')
+            div.id = "cartDivElement"
             if (Shop.myUser.cart.length > 0) {
                 
                 div.appendChild(Shop.myUser.cartHTMLElement())
