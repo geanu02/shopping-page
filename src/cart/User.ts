@@ -60,34 +60,18 @@ export default class User {
             btnRmAll.innerText = "Remove All"
             btnRmOne.id = `btnRmOne-${cartItem.id}`
             btnRmOne.innerText = "Remove One"
+            btnRmAll.addEventListener('click', (e): void => {
+                e.preventDefault()
+                this.removeFromCart(cartItem)
+            })
+            btnRmOne.addEventListener('click', (e): void => {
+                e.preventDefault()
+                this.removeQuantityFromCart(cartItem, 1)
+            })
             itemLine.append(itemNameH3, itemQtyP, itemPriceP, btnRmAll, btnRmOne)
             div.appendChild(itemLine)
         }
         return div
-    }
-
-    public addRemoveEventListeners = (add: boolean): void => {
-        if (add) {
-            if (this.cart.length > 0) {
-                for (let cartItem of this.cart) {
-                    let btnRmAll = document.getElementById(`btnRmAll-${cartItem.id}`)
-                    let btnRmOne = document.getElementById(`btnRmOne-${cartItem.id}`)
-                    // @ts-ignore
-                    btnRmAll.addEventListener('click', (e): void => {
-                        e.preventDefault()
-                        this.removeFromCart(cartItem)
-                    })
-                    btnRmOne?.addEventListener('click', (e): void => {
-                        e.preventDefault()
-                        this.removeQuantityFromCart(cartItem, 1)
-                    })
-                }
-            } else {
-                console.log("No items in cart.")
-            }
-        } 
-        // else {}
-        // else is to remove listeners from removeCart and removeQtyCart
     }
 
     // Class Methods 
@@ -103,7 +87,7 @@ export default class User {
             let idx = this.cart.indexOf(item)
             this.cart.splice(idx, 1)
         }
-        // this.addRemoveEventListeners(item, "btnRmAll", false)
+        Shop.refreshCart()
         console.log(`Removed all (${countItems}) ${item.name} from Cart.`)
     }
     public removeQuantityFromCart = (item: Item, qtyRemove: number): void => {
@@ -111,9 +95,7 @@ export default class User {
             let idx = this.cart.indexOf(item)
             this.cart.splice(idx, 1)
         }
-        // if (!this.cart.includes(item)) {
-        //     this.addRemoveEventListeners(item, "btnRmOne", false)
-        // }
+        Shop.refreshCart()
         console.log(`Removed ${qtyRemove} ${item.name} from Cart.`)
     }
     public cartTotal = (): number => {

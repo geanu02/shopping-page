@@ -60,7 +60,6 @@ export default class Shop {
 
     public static refreshCart = (): void => {
         document.getElementById('cartDivElement')?.replaceChildren(Shop.currentCart.updateCart())
-
     }
 
     // Methods
@@ -80,7 +79,7 @@ export default class Shop {
             if (Shop.myUser.cart.length > 0) {
                 div.appendChild(Shop.myUser.cartHTMLElement())
                 console.log("updateCart(Shop.myUser.cart has items)")
-                // Shop.myUser.addRemoveEventListeners(true)
+                //Shop.myUser.addRemoveEventListeners(true)
             } else {
                 console.log("updateCart(Shop.myUser.cart has no items)")
                 const noItems: HTMLElement = document.createElement('p') 
