@@ -45,6 +45,10 @@ export default class User {
 
     public cartHTMLElement = (): HTMLDivElement => {
         const div: HTMLDivElement = document.createElement('div')
+        const cartItemStyle: Partial<CSSStyleDeclaration> = {
+            width: "100%",
+            padding: "10px"
+        }
         for (let cartItem of this.cart) {
             let itemLine: HTMLDivElement = document.createElement('div')
             let itemNameH3: HTMLElement = document.createElement('h3') 
@@ -69,8 +73,13 @@ export default class User {
                 this.removeQuantityFromCart(cartItem, 1)
             })
             itemLine.append(itemNameH3, itemQtyP, itemPriceP, btnRmAll, btnRmOne)
+            Object.assign(itemLine.style, cartItemStyle)
             div.appendChild(itemLine)
         }
+        const cartContainer2Style: Partial<CSSStyleDeclaration> = {
+            width: "100%"
+        }
+        Object.assign(div.style, cartContainer2Style)
         return div
     }
 

@@ -37,13 +37,14 @@ export default class Item {
 
     public itemElement = (item: Item): HTMLDivElement => {
         const div: HTMLDivElement = document.createElement('div')!
+
         let itemNameH3: HTMLElement = document.createElement('h3') 
         let itemDesc: HTMLElement = document.createElement('p') 
         let itemPriceP: HTMLElement = document.createElement('p') 
         let addToCart: HTMLElement = document.createElement('button')
         itemNameH3.innerText = item.name
         itemDesc.innerText = item.desc
-        itemPriceP.innerText = item.price.toString()
+        itemPriceP.innerText = `$${item.price.toString()}`
         addToCart.id = `btnAddToCart-${item.id}`
         addToCart.innerText = "Add to Cart"
         div.append(itemNameH3, itemDesc, itemPriceP, addToCart)
@@ -57,6 +58,11 @@ export default class Item {
                 console.log("Can't addEventListener to AddToCart button")
             }
         })
+        const productStyle: Partial<CSSStyleDeclaration> = {
+            width: "100%",
+            padding: "10px"
+        }
+        Object.assign(div.style, productStyle)
         return div
     }
 

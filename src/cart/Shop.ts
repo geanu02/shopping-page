@@ -16,6 +16,9 @@ export default class Shop {
         this.parent.innerHTML = ""
         this.parent.id = "shopContainer"
         const shopContainerStyle: Partial<CSSStyleDeclaration> = {
+            margin: "40px auto",
+            width: "60%",
+            minWidth: "700px",
             display: "flex",
             flexDirection: "row",
         }
@@ -54,6 +57,11 @@ export default class Shop {
         const userInput = document.getElementById('userInput') as HTMLInputElement
         const ageInput = document.getElementById('ageInput') as HTMLInputElement
         const cartContainer: HTMLElement = document.getElementById('cartContainer')!
+        const loginForm: HTMLElement = document.getElementById('loginForm')!
+        const loginText: HTMLElement = document.getElementById('loginText')!
+        const disappear: Partial<CSSStyleDeclaration> = { display: 'none' }
+        Object.assign(loginForm.style, disappear)
+        loginText.innerText = `Welcome, ${userInput.value}! Happy shopping!`
         Shop.myUser = User.loginInUser(userInput.value, ageInput.value)
         Shop.currentCart = new Shop("Regalis", cartContainer)
     }
@@ -68,6 +76,10 @@ export default class Shop {
         for (let productItem of this.products) {
             div.append(productItem.itemElement(productItem))
         }
+        const productsContainerStyle: Partial<CSSStyleDeclaration> = {
+            width: "50%"
+        }
+        Object.assign(div.style, productsContainerStyle)
         return div
     }
 
@@ -78,14 +90,15 @@ export default class Shop {
             div.id = "cartDivElement"
             if (Shop.myUser.cart.length > 0) {
                 div.appendChild(Shop.myUser.cartHTMLElement())
-                console.log("updateCart(Shop.myUser.cart has items)")
-                //Shop.myUser.addRemoveEventListeners(true)
             } else {
-                console.log("updateCart(Shop.myUser.cart has no items)")
                 const noItems: HTMLElement = document.createElement('p') 
                 noItems.innerText = "Cart is empty."
                 div.appendChild(noItems)
             }
+            const cartContainerStyle: Partial<CSSStyleDeclaration> = {
+                width: "50%"
+            }
+            Object.assign(div.style, cartContainerStyle)
             return div
         }
     }
